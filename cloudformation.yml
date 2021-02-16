@@ -1,4 +1,4 @@
-# Poc para estudo de pipeline versão 1
+# Poc para estudo --->> versão 1
 
 Type: AWS::EC2::Instance
 Properties: 
