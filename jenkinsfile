@@ -1,9 +1,26 @@
 pipeline{
-    agent {docker{image 'python:3.5.1'}}
+    agent any
     stages {
         stage ('build') {
             steps {
-                sh'python --version'
+                echo 'hello-world'
+            }
+        }
+        stage ('run cloudformation') {
+            steps {
+                scripts {
+                    withAWS(credentials:awsCredentials) {
+                        cfnUpdate(
+                            stack: stack-rcouto,
+                            file: "cloudformation.yml",
+                            params: [
+                                "uniqString=${uniqString}"
+                            ],
+                            timeoutInMinutes: 10,
+                            pullInterval: 600
+                        )
+                    }
+                }
             }
         }
     }
